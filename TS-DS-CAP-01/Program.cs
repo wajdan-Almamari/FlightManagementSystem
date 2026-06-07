@@ -1,4 +1,6 @@
-﻿namespace TS_DS_CAP_01
+﻿using System.Net.Sockets;
+
+namespace TS_DS_CAP_01
 {
     internal class Program
     {
@@ -59,6 +61,8 @@
            
             // Display table header
             Console.WriteLine( "No.".PadRight(5) + " | " + "Passenger Name".PadRight(22) + " | " + "Ticket ID".PadRight(22) + " | " + "Status" );
+            Console.WriteLine("===============================================================================================================");
+
             // Loop through all passengers
             for (int index = 0; index < passengerNames.Count; index++)
             {
@@ -73,9 +77,79 @@
                 Console.WriteLine((index + 1).ToString().PadRight(5) + " | " +   passengerNames[index].PadRight(22) + " | " +  ticketNumbers[index].PadRight(22) + " | " +  status);
             }
             // Display total number of passengers
-            Console.WriteLine("Total Passengers: " + passengerNames.Count);
-        }
 
+            Console.WriteLine("Total Passengers: " + passengerNames.Count);
+            Console.WriteLine("=======================================");
+
+        }
+        public static void BookFlightTicket()
+        {
+            Console.Write("Enter a ticket ID : ");
+            string  ticketID = Console.ReadLine();
+            // Check if ticket ID exists
+            if (!ticketNumbers.Contains(ticketID))
+            {
+                Console.WriteLine("Ticket not found.");
+                return;
+            }
+            // Check if ticket is cancelled
+            if (cancelledTickets.Contains(ticketID))
+            {
+                Console.WriteLine("This ticket has been cancelled.");
+                return;
+            }
+            // Check if ticket already has a booking
+            if (bookingRecord.ContainsKey(ticketID))
+            {
+                Console.WriteLine("Ticket already booked.");
+                return;
+            }
+            // Display available flights
+            Console.WriteLine("\nAvailable Flights:");
+            for (int i = 0; i < flightNumbers.Length; i++)
+            {
+                Console.WriteLine((i + 1) + ". " + flightNumbers[i]);
+            }
+            // Select flight
+            Console.Write("Select Flight: ");
+            int flightChoice = int.Parse(Console.ReadLine());
+            if (flightChoice < 1 || flightChoice > flightNumbers.Length)
+            {
+                Console.WriteLine("Invalid flight choice.");
+                return;
+            }
+            string selectedFlight = flightNumbers[flightChoice - 1];
+            // Display available dates
+            Console.WriteLine("\nAvailable Dates:");
+            for (int i = 0; i < availableDates.Count; i++)
+            {
+                Console.WriteLine((i + 1) + ". " + availableDates[i]);
+            }
+            // Select date
+            Console.Write("Select Date: ");
+            int dateChoice = int.Parse(Console.ReadLine());
+            if (dateChoice < 1 || dateChoice > availableDates.Count)
+            {
+                Console.WriteLine("Invalid date choice.");
+                return;
+            }
+            // Store the selected date
+            string selectedDate = availableDates[dateChoice - 1];
+
+            // Save booking in dictionary
+            bookingRecord.Add(ticketID, selectedFlight + "|" + selectedDate);
+
+            // Find passenger name using ticket index
+            int passengerIndex = ticketNumbers.IndexOf(ticketID);
+
+            // Display booking confirmation
+            Console.WriteLine("\nBooking Successful");
+            Console.WriteLine("Passenger Name: " + passengerNames[passengerIndex]);
+            Console.WriteLine("Ticket ID: " + ticketID);
+            Console.WriteLine("Flight: " + selectedFlight);
+            Console.WriteLine("Date: " + selectedDate);
+        }
+        
         public static void showMenue()
         {
             Console.WriteLine("=======================================");
@@ -110,6 +184,7 @@
                         ViewAllPassengers();
                         break;
                     case 3://3. Book a Flight Ticke
+                        BookFlightTicket();
                         break;
                     case 4://4. View Booking Details
                         break;
