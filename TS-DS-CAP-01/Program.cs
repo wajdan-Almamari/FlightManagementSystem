@@ -2,8 +2,18 @@
 {
     internal class Program
     {
-        // MAI TEST 123
-        // Test Comment
+        static List<string> passengerNames = new List<string>() { "Wajdan", "Ali", "Ahmed", "Sara", "Fatma" };
+        static List<string> ticketNumbers = new List<string>() { "TKT-001", "TKT-002", "TKT-003", "TKT-004", "TKT-005" };
+        static string[] flightNumbers = { "OA101", "OA102", "OA103", "OA104", "OA105", "OA106" };
+        static List<string> availableDates = new List<string>() {"12-Jan-2026","15-Jan-2026","18-Jan-2026","20-Jan-2026" };
+        static Dictionary<string, string> bookingRecord = new Dictionary<string, string>();
+        static Queue<string> checkedInQueue =new Queue<string>();
+        static Stack<string> boardingStack =new Stack<string>();
+        static List<string> cancelledTickets =new List<string>();
+        static Dictionary<string, string> passengerSeatMap =new Dictionary<string, string>();
+        static Queue<string> waitlistQueue =new Queue<string>();
+
+
         public static void showMenue()
         {
             Console.WriteLine("=======================================");
