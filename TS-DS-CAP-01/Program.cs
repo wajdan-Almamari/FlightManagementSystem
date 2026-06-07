@@ -48,6 +48,33 @@
             Console.WriteLine("Passenger Name: " + EnterpassengerName);
             Console.WriteLine("Ticket ID: " + ticketID);
         }
+        public static void ViewAllPassengers()
+        {
+            // Check if there are any registered passengers
+            if (passengerNames.Count == 0)
+            {
+                Console.WriteLine("No passengers registered yet.");
+                return;
+            }
+           
+            // Display table header
+            Console.WriteLine( "No.".PadRight(5) + " | " + "Passenger Name".PadRight(22) + " | " + "Ticket ID".PadRight(22) + " | " + "Status" );
+            // Loop through all passengers
+            for (int index = 0; index < passengerNames.Count; index++)
+            {
+                // Default passenger status
+                string status = "Active";
+                // Check if the ticket has been cancelled
+                if (cancelledTickets.Contains(ticketNumbers[index]))
+                {
+                    status = "CANCELLED";
+                }
+                // Display passenger information
+                Console.WriteLine((index + 1).ToString().PadRight(5) + " | " +   passengerNames[index].PadRight(22) + " | " +  ticketNumbers[index].PadRight(22) + " | " +  status);
+            }
+            // Display total number of passengers
+            Console.WriteLine("Total Passengers: " + passengerNames.Count);
+        }
 
         public static void showMenue()
         {
@@ -80,6 +107,7 @@
                         RegisterNewPassenger();
                         break;
                     case 2://2. View All Passengers
+                        ViewAllPassengers();
                         break;
                     case 3://3. Book a Flight Ticke
                         break;
