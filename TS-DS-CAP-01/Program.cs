@@ -13,6 +13,41 @@
         static Dictionary<string, string> passengerSeatMap =new Dictionary<string, string>();
         static Queue<string> waitlistQueue =new Queue<string>();
 
+        public static void RegisterNewPassenger()
+        {
+            Console.Write("Enter passenger name: ");
+            string EnterpassengerName = Console.ReadLine();
+
+            // Check if name is empty
+            if (EnterpassengerName.Trim() == "")
+            {
+                Console.WriteLine("Name cannot be empty.");
+                return;
+            }
+
+            // Check if the passenger already exists in the list
+            for (int i = 0; i < passengerNames.Count; i++)
+            {
+                // Compare names ignoring uppercase and lowercase letters
+                if (EnterpassengerName.ToLower().Trim() == passengerNames[i].ToLower().Trim())
+                {
+                    Console.WriteLine("Passenger already exists.");
+                    return;
+                }
+            }//end of for
+
+            // Generate new ticket ID
+            string ticketID = "TKT-" + (ticketNumbers.Count + 1).ToString("000");
+
+            // Add passenger name and ticket ID at the same index
+            passengerNames.Add(EnterpassengerName);
+            ticketNumbers.Add(ticketID);
+
+            // Display success message
+            Console.WriteLine("Passenger registered successfully.");
+            Console.WriteLine("Passenger Name: " + EnterpassengerName);
+            Console.WriteLine("Ticket ID: " + ticketID);
+        }
 
         public static void showMenue()
         {
@@ -42,6 +77,7 @@
                 int enterChoise = int.Parse(Console.ReadLine());
                 switch (enterChoise) {
                     case 1://1. Register New Passenger
+                        RegisterNewPassenger();
                         break;
                     case 2://2. View All Passengers
                         break;
