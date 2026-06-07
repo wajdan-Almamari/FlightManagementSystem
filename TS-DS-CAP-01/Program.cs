@@ -149,7 +149,57 @@ namespace TS_DS_CAP_01
             Console.WriteLine("Flight: " + selectedFlight);
             Console.WriteLine("Date: " + selectedDate);
         }
-        
+        public static void ViewBookingDetails()
+        {
+            Console.WriteLine("Enter tickit ID : ");
+            string ticketId = Console.ReadLine();
+            // Check if ticket exists
+            if (!ticketNumbers.Contains(ticketId))
+            {
+                Console.WriteLine("Ticket not found.");
+                return;
+            }
+            // Get passenger name using ticket index
+            int passengerIndex = ticketNumbers.IndexOf(ticketId);
+                string passengerName = passengerNames[passengerIndex];
+            // Check if ticket is cancelled
+            if (!ticketNumbers.Contains(ticketId))
+            {
+                Console.WriteLine("Ticket not found.");
+                return;
+            }
+            // Check if ticket is cancelled
+            if (cancelledTickets.Contains(ticketId))
+            {
+                Console.WriteLine("This ticket has been cancelled.");
+                return;
+            }
+
+            // Check if booking exists
+            if (!bookingRecord.ContainsKey(ticketId))
+            {
+                Console.WriteLine("No booking found for this ticket.");
+                return;
+            }
+
+            // Get booking value from dictionary
+            string bookingValue = bookingRecord[ticketId];
+
+            // Split flight and date
+            string[] bookingParts = bookingValue.Split('|');
+
+            string flight = bookingParts[0];
+            string date = bookingParts[1];
+
+            // Display booking details
+            Console.WriteLine("\nBooking Details");
+            Console.WriteLine("Passenger Name: " + passengerName);
+            Console.WriteLine("Ticket ID: " + ticketId);
+            Console.WriteLine("Flight: " + flight);
+            Console.WriteLine("Date: " + date);
+        }
+
+     
         public static void showMenue()
         {
             Console.WriteLine("=======================================");
@@ -187,6 +237,7 @@ namespace TS_DS_CAP_01
                         BookFlightTicket();
                         break;
                     case 4://4. View Booking Details
+                        ViewBookingDetails();
                         break;
                     case 5://5. Update a Booking
                         break;
