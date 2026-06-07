@@ -198,8 +198,85 @@ namespace TS_DS_CAP_01
             Console.WriteLine("Flight: " + flight);
             Console.WriteLine("Date: " + date);
         }
+        public static void UpdateBookingMenu()
+        {
+            // Sub-menu code
+            bool back = false;
 
-     
+            while (back == false)
+            {
+                Console.WriteLine("1. Change flight only");
+                Console.WriteLine("2. Change date only");
+                Console.WriteLine("3. Change both");
+                Console.WriteLine("0. Cancel update");
+
+                Console.Write("Enter your choice: ");
+                int choice = int.Parse(Console.ReadLine());
+
+                switch (choice)
+                {
+                    case 1:
+                        Console.WriteLine("Change flight only");
+                        // Display flights
+                        for (int i = 0; i < flightNumbers.Length; i++)
+                        {
+                            Console.WriteLine((i + 1) + ". " + flightNumbers[i]);
+                        }
+                        
+                        back = true;
+                        break;
+
+                    case 2:
+                        Console.WriteLine("Change date only");
+                        back = true;
+                        break;
+
+                    case 3:
+                        Console.WriteLine("Change both");
+                        back = true;
+                        break;
+
+                    case 0:
+                        Console.WriteLine("Update cancelled.");
+                        back = true;
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid choice. Try again.");
+                        break;
+                }
+            }
+        }
+        public static void UpdateBooking()
+        {
+            Console.Write("Enter Ticket ID: ");
+            string ticketID = Console.ReadLine();
+
+            // Check if ticket exists
+            if (!ticketNumbers.Contains(ticketID))
+            {
+                Console.WriteLine("Ticket not found.");
+                return;
+            }
+
+            // Check if ticket is cancelled
+            if (cancelledTickets.Contains(ticketID))
+            {
+                Console.WriteLine("This ticket has been cancelled.");
+                return;
+            }
+
+            // Check if booking exists
+            if (!bookingRecord.ContainsKey(ticketID))
+            {
+                Console.WriteLine("No booking found.");
+                return;
+            }
+            Console.WriteLine(bookingRecord[ticketID]);
+            UpdateBookingMenu();
+        }
+
+
         public static void showMenue()
         {
             Console.WriteLine("=======================================");
@@ -240,6 +317,7 @@ namespace TS_DS_CAP_01
                         ViewBookingDetails();
                         break;
                     case 5://5. Update a Booking
+                        UpdateBooking();
                         break;
                     case 6://6. Cancel a Ticket
                         break;
